@@ -1,0 +1,152 @@
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body ng-app="MyApp" style="width: 100%;">
+    <div ng-controller="AppController" style="width: 100%;" div layout="column" layout-align="center center">
+        <div layout="column" layout-xs="column" layout-align=" start center" flex="100" class="page-heading">
+            <h1>Exambazaar Team </h1>
+        </div>
+
+        <div layout="row" layout-xs="row" layout-align="start center" layout-align-sm="center center" layout-align-gt-sm="center center" class="card-container" ng-class="changeClass()">
+            <div layout="column" layout-xs="column" flex="30" flex-md="33" flex-sm="40" flex-xs="100" ng-repeat="card in cards track by $index" class="card" ng-click="showDescription($index)">
+                <div class="card-image">
+                    <img src="{{card.image}}" alt="" />
+                </div>
+                <div class="card-details">
+                    <div class="card-title">
+                        {{card.name}} <br />
+                        <span style="font-size:18px; font-family:'Varela Round',sans-serif; font-style: italic;">{{card.designation}}</span>
+                    </div>
+                    <!-- <div class="card-extra">
+                        {{card.mobile}} <br /> {{card.email}}
+                    </div> -->
+                </div>
+
+            </div>
+
+        </div>
+        <div layout="column" layout-xs="column" flex="30" flex-md="33" flex-sm="40" flex-xs="100" class="card-description" ng-if="activeCard !=' ' ">
+            {{activeCard.description}}
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+    <script>
+        angular.module('MyApp', [])
+
+        function AppController($scope) {
+            $scope.cards = [];
+
+
+
+            $scope.changeClass = function() {
+
+                    if (window.innerWidth > 600) {
+                        return "layout-wrap";
+                    } else {
+                        return "layout-nowrap";
+                    }
+                } //this function on mobile view changes the layout-wrap to layout-nowrap.This is done to achive horizontal scroll for the cards
+
+            $scope.activeCard = ' ';
+
+            $scope.showDescription = function($index) {
+                if (window.innerWidth < 600) {
+                    $scope.activeCard = $scope.cards[$index];
+                }
+            }; // first it'll check if page is accesed on mobile view and then it'll get add the card clicked to activeCard by tracking it through $index.
+
+
+            $scope.cards = [{
+                id: 1,
+                name: "Gaurav Parashar",
+                designation: "Founder",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/gaurav-sir_pv9vbf.jpg",
+                mobile: 9829685919,
+                email: "gaurav@exambazaar.com",
+                showDescription: false,
+                description: "1: consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus. "
+            }, {
+                id: 2,
+                name: "Saloni Khandelwal",
+                designation: "Co-founder",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/saloni-mam_ukaedi.jpg",
+                mobile: 8005514778,
+                email: "saloni@exambazaar.com",
+                showDescription: false,
+                description: "2 : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus."
+            }, {
+                id: 3,
+                name: "Lovish Aggarwal",
+                designation: "Tech Lead",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588605/Profile-Images/lovish-sir_wdmjcz.jpg",
+                mobile: 9799433141,
+                email: "lovish@exambazaar.com",
+                showDescription: false,
+                description: "3: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus."
+            }, {
+                id: 4,
+                name: "Ayush Jain",
+                designation: "Business Development Manager",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588606/Profile-Images/ayush-sir_gweqln.jpg",
+                mobile: 9587571215,
+                email: "ayush@exambazaar.com",
+                showDescription: false,
+                description: "4: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus."
+            }, {
+                id: 5,
+                name: "Akshay Agarwal",
+                designation: "Intern",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588606/Profile-Images/akshay-sir_rdqeqy.jpg",
+                mobile: 9810979404,
+                email: "akshayagrawal2294@gmail.com",
+                showDescription: false,
+                description: "5: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus."
+            }, {
+                id: 6,
+                name: "Kanika Thaneja",
+                designation: "Intern",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/kanika_iuo0hp.png",
+                mobile: 9983666040,
+                email: "kthaneja@gmail.com",
+                showDescription: false,
+                description: "6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus."
+
+            }, {
+                id: 7,
+                name: "Samyak Jain",
+                designation: "Intern",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/samyak_zx2l32.png",
+                mobile: 9784110473,
+                email: "samyakkashiwal@gmail.com",
+                showDescription: false,
+                description: "7: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus."
+            }];
+
+        }
+
+
+        angular
+            .module('MyApp', ['ngMaterial', 'ngMessages'])
+            .controller('AppController', AppController)
+    </script>
+
+</body>
+
+</html>
