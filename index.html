@@ -12,43 +12,61 @@
 <body ng-app="MyApp" style="width: 100%;">
     <!-- This part will render the view  -->
     <div ng-controller="AppController" style="width: 100%;" div layout="column" layout-align="center center">
-        <div layout="column" layout-xs="column" layout-align=" start center" flex="100" class="page-heading">
+        <div class="page-heading" layout="column" layout-xs="column" layout-align=" start center" flex="100">
             <h1>Exambazaar Team </h1>
         </div>
-        <div layout="row" layout-xs="row" layout-align="center center" layout-align-sm="center center" layout-align-gt-sm="center center" class="card-container" ng-class="changeClass()">
-            <div layout="column" layout-xs="column" flex="30" flex-md="33" flex-sm="25" flex-xs="100" ng-repeat="card in cards track by $index" class="cards" ng-click="showDescription($index)">
-                <div layout="column" layout-xs="row" flex="30" flex-md="33" flex-sm="25" flex-xs="100" class="cards2">
-                    <div class="cards-image" flex-xs="50">
-                        <img src="{{card.image}}" alt="" />
-                    </div>
-                    <div class="cards-details" layout="column" layout-align="center center" flex-xs="50">
-                        <div class=" cards-title" layout="column" layout-align="center center">
-                            <span class="person-name" layout-align="center center">{{card.name}} <br />
-                            </span>
-                            <span class="person-designation">
-                                {{card.designation}}
-                            </span>
+        <div class="card-container" layout="row" layout-xs="row" layout-align="center center" layout-align-sm="center center" layout-align-gt-sm="center center" ng-class="changeClass()">
+            <div class="cards" layout="column" layout-xs="column" flex="30" flex-md="33" flex-sm="25" flex-xs="100" ng-repeat="card in cards track by $index" ng-click="showDescription($index)">
+                <div class="cards2" layout="column" layout-xs="row" flex="85" flex-md="33" flex-sm="25" flex-xs="100" ng-click="changeDisplay($index)">
+                    <div class="incards2" layout="column" layout-xs="row" flex="85" flex-md="33" flex-sm="25" flex-xs="100" ng-style="Displaynone" ng-class="{selected: selection.selectedNode == item}">
+                        <div class="cards-image" flex-xs="50">
+                            <img src="{{card.image}}" alt="" />
+                        </div>
+                        <div class="cards-details" layout="column" layout-align="center center" flex-xs="60">
+                            <div class=" cards-title" layout="column" layout-align="center center">
+                                <span class="person-name" layout-align="center center">{{card.name}} <br />
+                                </span>
+                                <span class="person-designation">
+                                    {{card.designation}}
+                                </span>
+                            </div>
+
                         </div>
 
                     </div>
+                    <div class="cards-desc" layout="column" layout-align="center center" flex="100" ng-style="Displayall">
+                        {{card.description}}
+                    </div>
                 </div>
-                <div class="cards-contact-information" layout="column" layout-align="start start" flex="10" flex-xs="15">
-                    <ul layout="column" layout-align="start space-evenly" ng-class="changeClass()">
-                        <li layout-align="center center" class="logo">
-                            <a layout="row" flex="100" layout-align="center center" href=" {{card.linkedin}} "><img src=" ./Logos/linkedin.svg " alt=" " srcset=" "></a>
+
+                <div class="cards-contact-information" layout="column" layout-align="center end" flex="10" flex-xs="15">
+                    <ul class="professional-links" layout="column" layout-align="start space-evenly" ng-class="changeClass()" ng-style="Displaynone">
+                        <li class="logo" layout-align="center center" ng-if="card.linkedin !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href=" {{card.linkedin}} "><img src=" ./Logos/linkedin.png" alt=" " srcset=" "></a>
                         </li>
-                        <li layout-align="center center" class="logo" ng-if="card.github !==' ' ">
+                        <li class="logo" layout-align="center center" ng-if="card.github !==' ' ">
                             <a layout="row" flex="100" layout-align="center center" href="{{card.github}} "><img src="./Logos/github-logo.svg " alt=" " srcset=" "></a>
                         </li>
-                        <li layout-align="center center" class="logo">
-                            <a layout="row" flex="100" layout-align="center center" href="{{card.email}} " class="logo "><img src="./Logos/envelope.svg " alt=" " srcset=" "></a>
+                        <li class="logo" layout-align="center center" ng-if="card.email !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href="{{card.email}} "><img src="./Logos/envelope.svg " alt=" " srcset=" "></a>
                         </li>
-                        <li layout-align="center center" class="logo">
+                        <li class="logo" layout-align="center center" ng-if="card.mobile !==' ' ">
                             <a layout="row" flex="100" layout-align="center center" href="{{card.mobile}} "><img src="./Logos/smartphone-call.svg " alt=" " srcset=" "></a>
                         </li>
 
                     </ul>
+                    <ul class="social-links" layout="column" layout-align="start space-evenly" ng-class="changeClass()" ng-style="Displayall">
+                        <li layout-align="center center" class="logo">
+                            <a layout="row" flex="100" layout-align="center center" href=" {{card.linkedin}} "><img src="./Logos/facebook-logo.svg" alt=" " srcset=" "></a>
+                        </li>
+                        <li class="logo" layout-align="center center" ng-if="card.github !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href="{{card.github}} "><img src="./Logos/twitter-logo-button.svg " alt=" " srcset=" "></a>
+                        </li>
+
+
+                    </ul>
                 </div>
+
             </div>
         </div>
         <div layout="column " layout-xs="column " flex="30 " flex-md="33 " flex-sm="40 " flex-xs="100 " class="card-description " ng-if="activeCard !=' ' ">
@@ -91,6 +109,19 @@
                     $scope.activeCard = $scope.cards[$index];
                 }
             };
+
+            $scope.changeDisplay = function($index) {
+
+                    $scope.Displaynone = {
+                            display: 'none'
+                        },
+                        $scope.Displayall = {
+                            display: 'flex',
+                            visibility: 'visible'
+                        }
+
+                } //this function is changing the style properties with the help of ng-style
+
 
 
             $scope.cards = [{
@@ -184,4 +215,4 @@
 
 </body>
 
-</html>
+</html>5%
