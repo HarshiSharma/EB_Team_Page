@@ -1,0 +1,230 @@
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+
+<body ng-app="MyApp" style="width: 100%;" class="noSelect">
+    <!-- This part will render the view  -->
+    <div ng-controller="AppController" style="width: 100%;" layout="column" layout-align="center center">
+        <div class="page-heading" layout="column" layout-xs="column" layout-align=" start center" flex="100">
+            <h1>Exambazaar Team </h1>
+        </div>
+        <div class="card-container" layout="row" layout-xs="row" layout-align="center center" layout-align-sm="center center" layout-align-gt-sm="center center" layout-align-xs="start center" ng-class="changeClass()">
+            <div class="cards  " layout="column" layout-xs="column" flex="30" flex-md="33" flex-sm="25" flex-xs="100" ng-repeat="card in cards track by $index" ng-click="showDescription($index)">
+                <div class="cards2 " layout="column" flex="88" flex-md="33" flex-sm="25" flex-xs="90" ng-click="changeDisplay(card)">
+                    <div class="incards2 fade" layout="column" flex="90" flex-md="33" flex-sm="25" flex-xs="100" ng-class="{selected: selection.selectedNode == item}" ng-if="card.filpCard==false">
+                        <div class="cards-image" flex-xs="60">
+                            <img src="{{card.image}}" alt="" />
+                        </div>
+                        <div class="cards-details" layout="column" layout-align="center center" flex-xs="40">
+                            <div class=" cards-title" layout="column" layout-align="center center">
+                                <span class="person-name" layout-align="center center">{{card.name}} <br />
+                                </span>
+                                <span class="person-designation">
+                                    {{card.designation}}
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="cards-desc" layout="column" layout-align="center center" flex="100" ng-if="card.filpCard==true">
+                        <p>{{card.description}}</p>
+                    </div>
+                </div>
+
+                <div class="cards-contact-information " layout="column" layout-align="center end" flex="10" flex-xs="10">
+                    <ul class="professional-links fade" layout="column" layout-xs="row" layout-align="start space-evenly" layout-align-xs="center space-evenly" ng-class="changeClass()" ng-if="card.filpCard==false">
+                        <li class="logo" layout-align="center center" ng-if="card.linkedin !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href=" {{card.linkedin}} "><img src=" https://res.cloudinary.com/dgztdidvo/image/upload/v1558765693/logos/linkedin_cj6hxg.svg" alt=" " srcset=" "></a>
+                        </li>
+                        <li class="logo" layout-align="center center" ng-if="card.github !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href="{{card.github}} "><img src="https://res.cloudinary.com/dgztdidvo/image/upload/v1558765693/logos/github-logo_wo3yer.svg" alt=" " srcset=" "></a>
+                        </li>
+                        <li class="logo" layout-align="center center" ng-if="card.email !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href="{{card.email}} "><img src="https://res.cloudinary.com/dgztdidvo/image/upload/v1558765693/logos/envelope_l0tbks.svg" alt=" " srcset=" "></a>
+                        </li>
+                        <li class="logo" layout-align="center center" ng-if="card.mobile !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href="{{card.mobile}} "><img src="https://res.cloudinary.com/dgztdidvo/image/upload/v1558765693/logos/smartphone-call_vohdig.svg" alt=" " srcset=" "></a>
+                        </li>
+
+                    </ul>
+                    <ul class="social-links fade " layout="column" layout-xs="row" layout-align="start space-evenly" layout-align-xs="center space-evenly" ng-class="changeClass()" ng-if="card.filpCard==true">
+                        <li layout-align="center center" class="logo" ng-if="card.twitter !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href=" {{card.twitter}} "><img src="https://res.cloudinary.com/dgztdidvo/image/upload/v1558765693/logos/twitter-logo-button_fljoax.svg" alt=" " srcset=" "></a>
+                        </li>
+                        <li class="logo" layout-align="center center" ng-if="card.facebook !==' ' ">
+                            <a layout="row" flex="100" layout-align="center center" href="{{card.facebook}} "><img src="https://res.cloudinary.com/dgztdidvo/image/upload/v1558765693/logos/facebook-logo_cazhue.svg" alt=" " srcset=" "></a>
+                        </li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js "></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js "></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js "></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js "></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js "></script>
+    <!-- controller for the view -->
+    <script>
+        angular.module('MyApp', [])
+
+
+        function AppController($scope) {
+            $scope.cards = [];
+
+
+
+            $scope.changeClass = function() {
+                    if (window.innerWidth > 600) {
+                        return "layout-wrap ";
+                    } else {
+                        return "layout-nowrap";
+                    }
+                } //this function on mobile view changes the layout-wrap to layout-nowrap.This is done to achive horizontal scroll for the cards
+
+            $scope.activeCard = ' ';
+
+            $scope.showDescription = function($index) {
+                if (window.innerWidth < 600) {
+                    $scope.activeCard = $scope.cards[$index];
+                }
+            };
+
+            $scope.changeDisplay = function(card) {
+                card.filpCard = !card.filpCard
+            }
+
+
+
+            $scope.cards = [{
+                id: 1,
+                name: "Gaurav Parashar ",
+                designation: "Co-Founder ",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/gaurav-sir_pv9vbf.jpg ",
+                mobile: 9829685919,
+                email: "mailto:gaurav@exambazaar.com ",
+                github: " ",
+                linkedin: "https://www.linkedin.com/in/gaurav-parashar/",
+                facebook: " https://www.facebook.com/exambazaar ",
+                twitter: " ",
+                filpCard: false,
+                showDescription: false,
+                description: "1: consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus.",
+
+            }, {
+                id: 2,
+                name: "Saloni Khandelwal ",
+                designation: "Co-founder ",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/saloni-mam_ukaedi.jpg ",
+                mobile: 8005514778,
+                email: "mailto:saloni@exambazaar.com ",
+                github: " ",
+                linkedin: "https://www.linkedin.com/in/saloni-khandelwal/",
+                facebook: "https://www.facebook.com/exambazaar ",
+                twitter: " https://twitter.com/saloni_eb",
+                showDescription: false,
+                filpCard: false,
+                description: "2 : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus. "
+            }, {
+                id: 3,
+                name: "Lovish Aggarwal ",
+                designation: "Tech Lead ",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558603107/Profile-Images/lovish-sir_wdmjcz.jpg ",
+                mobile: 9799433141,
+                email: "mailto:lovish@exambazaar.com ",
+                github: " xyz.com ",
+                linkedin: "https://www.linkedin.com/in/guptaluv8098/",
+                facebook: "https://www.facebook.com/exambazaar ",
+                twitter: " ",
+                filpCard: false,
+                showDescription: false,
+                description: "3: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus. "
+            }, {
+                id: 4,
+                name: "Ayush Jain ",
+                designation: "Business Development Manager ",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588606/Profile-Images/ayush-sir_gweqln.jpg ",
+                mobile: 9587571215,
+                email: "mailto:ayush@exambazaar.com ",
+                github: "  ",
+                linkedin: "https://www.linkedin.com/in/ayush-jain-461209164/",
+                facebook: "https://www.facebook.com/exambazaar ",
+                twitter: " ",
+                filpCard: false,
+                showDescription: false,
+                description: "4: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus. "
+            }, {
+                id: 5,
+                name: "Akshay Agarwal ",
+                designation: "Intern ",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588606/Profile-Images/akshay-sir_rdqeqy.jpg ",
+                mobile: 9810979404,
+                email: "mailto:akshayagrawal2294@gmail.com ",
+                github: " ",
+                facebook: "https://www.facebook.com/exambazaar ",
+                twitter: " ",
+                linkedin: "https://www.linkedin.com/in/akshay2204/",
+                filpCard: false,
+                showDescription: false,
+                description: "5: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus. "
+            }, {
+                id: 6,
+                name: "Kanika Thaneja ",
+                designation: "Intern ",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/kanika_iuo0hp.png ",
+                mobile: 9983666040,
+                email: "mailto:kthaneja@gmail.com ",
+                facebook: "https://www.facebook.com/exambazaar ",
+                twitter: " ",
+                github: " ",
+                linkedin: " ",
+                showDescription: false,
+                filpCard: false,
+                description: "6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus. "
+
+            }, {
+                id: 7,
+                name: "Samyak Jain ",
+                designation: "Intern ",
+                image: "https://res.cloudinary.com/dgztdidvo/image/upload/v1558588607/Profile-Images/samyak_zx2l32.png ",
+                mobile: 9784110473,
+                email: "mailto:samyakkashiwal@gmail.com ",
+                facebook: " https://www.facebook.com/exambazaar",
+                twitter: " ",
+                github: " ",
+                linkedin: " ",
+                showDescription: false,
+                filpCard: false,
+                description: "7: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula feugiat nisi, sed dictum odio tempor a. Integer lobortis, arcu in vestibulum pulvinar, dui risus consequat urna, ac sodales nisl mi sed tellus. "
+            }];
+
+        }
+
+
+        angular
+            .module('MyApp', ['ngMaterial', 'ngMessages', 'ngAnimate'])
+            .controller('AppController', AppController)
+    </script>
+
+</body>
+
+</html>
